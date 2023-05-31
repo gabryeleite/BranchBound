@@ -4,7 +4,7 @@
 #include <math.h>
 #include <time.h>
 
-#define MAX_ITEM 100
+#define NUM_ITEM 100
 #define MAX_PESO 191
 #define MAX_PRIORIDADE 91
 #define CAPACIDADE 500
@@ -24,15 +24,15 @@ int IniciaRamo(Item *item, int quantidades[], int capacidade, int MelhorSol[], i
 void ReiniciaPoda(bool Poda[]);
 int Limitante(Item *item, const int quantidades[], const int k);
 bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *SolAtual, const int k);
-bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[], bool Poda[], int *SolAtual);
+bool Ramifica(Item *item, int quantidades[], int MelhorSol[], bool Poda[], int *CapacRestante, int *SolAtual);
 int Mochila(Item *item, int quantidades[], int capacidade);
 
 int main()
 {
     srand(time(NULL));
-    int quant = MAX_ITEM;
+    int quant = NUM_ITEM;
     int capacidade = CAPACIDADE;
-    int quantidades[MAX_ITEM] = {0};
+    int quantidades[NUM_ITEM] = {0};
     Item *item = malloc(quant*sizeof(Item));
 
     AtribuiDado(item, quant);
@@ -85,7 +85,7 @@ void PrintItem(Item *item, int capacidade, int quant){
 
 int CalculaSol(Item *item, const int quantidades[]){
     int solucao = 0;
-    for(int i=0; i < MAX_ITEM; i++){
+    for(int i=0; i < NUM_ITEM; i++){
         solucao += quantidades[i] * item[i].prioridade;
     }
 
@@ -96,7 +96,7 @@ void AnalisaSol(Item *item, const int quantidades[], int MelhorSol[], int *SolAt
     int solucao = CalculaSol(item, quantidades);
 
     if(solucao > *SolAtual){
-        for (int i=0; i < MAX_ITEM; i++){
+        for (int i=0; i < NUM_ITEM; i++){
             MelhorSol[i] = quantidades[i];
         }
         *SolAtual = solucao;
@@ -108,7 +108,7 @@ int IniciaRamo(Item *item, int quantidades[], int capacidade, int MelhorSol[], i
     quantidades[0] =  CapacRestante /item[0].peso;
     CapacRestante -= quantidades[0] * item[0].peso;
 
-    for(int i=1; i < MAX_ITEM; i++){
+    for(int i=1; i < NUM_ITEM; i++){
         int qntde = CapacRestante / item[i].peso;
         quantidades[i] = qntde;
         CapacRestante -= qntde * item[i].peso;
@@ -121,7 +121,7 @@ int IniciaRamo(Item *item, int quantidades[], int capacidade, int MelhorSol[], i
 }
 
 void ReiniciaPoda(bool Poda[]){
-    for(int i=0; i < MAX_ITEM; i++){
+    for(int i=0; i < NUM_ITEM; i++){
         Poda[i] = false;
     }
 }
@@ -160,10 +160,10 @@ bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *So
     }
 }
 
-bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[], bool Poda[], int *SolAtual){
+bool Ramifica(Item *item, int quantidades[], int MelhorSol[], bool Poda[], int *CapacRestante, int *SolAtual){
     int k = -1;
 
-    for(int i = MAX_ITEM - 1; i >= 0; i--){
+    for(int i = NUM_ITEM - 1; i >= 0; i--){
         if(quantidades[i] != 0 && Poda[i]==false){
             k = i;
             break;
@@ -175,7 +175,7 @@ bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[]
         quantidades[k] -= 1;
         *CapacRestante += item[k].peso;
         
-        for(int i = k + 1; i < MAX_ITEM; i++){
+        for(int i = k + 1; i < NUM_ITEM; i++){
             int qntde = (*CapacRestante) / item[i].peso;
             quantidades[i] = qntde;
             *CapacRestante -= qntde * item[i].peso;
@@ -187,15 +187,15 @@ bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[]
 }
 
 int Mochila(Item *item, int quantidades[], int capacidade){
-    int MelhorSol[MAX_ITEM], SolAtual = 0;
+    int MelhorSol[NUM_ITEM], SolAtual = 0;
     bool Ramificacao = true;
     int CapacRestante = IniciaRamo(item, quantidades, capacidade, MelhorSol, &SolAtual);
 
-    bool Poda[MAX_ITEM];
+    bool Poda[NUM_ITEM];
     ReiniciaPoda(Poda);
 
     while (Ramificacao){
-        Ramificacao = Ramifica(item, quantidades, &CapacRestante, MelhorSol, Poda, &SolAtual);
+        Ramificacao = Ramifica(item, quantidades, MelhorSol, Poda, &CapacRestante, &SolAtual);
     }
 
     return SolAtual;
