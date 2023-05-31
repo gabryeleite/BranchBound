@@ -33,7 +33,7 @@ int main()
     int quant = MAX_ITEM;
     int capacidade = CAPACIDADE;
     int quantidades[MAX_ITEM] = {0};
-    Item *item = malloc(MAX_ITEM*sizeof(Item));
+    Item *item = malloc(quant*sizeof(Item));
 
     AtribuiDado(item, quant);
 
