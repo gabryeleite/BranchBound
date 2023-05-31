@@ -5,7 +5,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define MAX_ITEM 1000
+#define MAX_ITEM 100
 #define MAX_PESO 191
 #define MAX_PRIORIDADE 91
 #define CAPACIDADE 500
