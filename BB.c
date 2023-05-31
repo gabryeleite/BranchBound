@@ -140,31 +140,16 @@ int Limitante(Item *item, const int quantidades[], const int k){
 bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *SolAtual, const int k){
     int limitante = Limitante(item, quantidades, k);
 
-    if(k==0){
-        if(limitante > *SolAtual){
-            //Ramifica
-            ReiniciaPoda(Poda);
+    if(limitante > *SolAtual){
+        //Ramifica
+        ReiniciaPoda(Poda);
 
-            return true;
-        }else{
-            //Poda
-            Poda[k] = true;
-
-            return false;
-        }
+        return true;
     }else{
-        int SolOtima = CalculaSol(item, quantidades);
-        if(limitante > *SolAtual){ 
-            //Ramifica
-            ReiniciaPoda(Poda);
+        //Poda
+        Poda[k] = true;
 
-            return true;
-        }else{
-            //Poda
-            Poda[k] = true;
-
-            return false;
-        }
+        return false;
     }
 }
 bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[], bool Poda[], int *SolAtual){
