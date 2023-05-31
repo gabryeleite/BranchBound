@@ -37,7 +37,6 @@ int main()
 
     AtribuiDado(item, MAX_ITEM);
 
-    printf("\nBranch and Bound:\n");
     int solucao = Mochila(item, quantidades);
 
     printf("\nSolucao(BB): %d\n", solucao);
@@ -143,13 +142,11 @@ bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *So
 
     if(k==0){
         if(limitante > *SolAtual){
-            printf("%d > %d \n", limitante, *SolAtual);
             //Ramifica
             ReiniciaPoda(Poda);
 
             return true;
         }else{
-            printf("%d < %d \nPoda\n", limitante, *SolAtual);
             //Poda
             Poda[k] = true;
 
@@ -158,13 +155,11 @@ bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *So
     }else{
         int SolOtima = CalculaSol(item, quantidades);
         if(limitante > *SolAtual){ 
-            printf("%d > %d \n", limitante, SolOtima);
             //Ramifica
             ReiniciaPoda(Poda);
 
             return true;
         }else{
-            printf("%d < %d \nPoda\n", limitante, SolOtima);
             //Poda
             Poda[k] = true;
 
