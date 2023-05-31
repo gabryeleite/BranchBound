@@ -10,7 +10,7 @@
 #define MAX_PRIORIDADE 91
 #define CAPACIDADE 500
 
-typedef struct{ //Linha 170: Comparar com SolOtima
+typedef struct{ 
     double fator;
     int prioridade;
     int peso;
@@ -63,14 +63,12 @@ void Ordena(Item *item, int quant){
         }
     }
 }
-
 void PrintItem(Item *item, int quant){
     printf("\niItens Ordenados: \n");
     for(int i=0; i<quant; i++){
         printf("Item: %2d\tPeso: %d\tPrioridade: %d\tFator: %.4f\n", i + 1, item[i].peso, item[i].prioridade, item[i].fator);
     }
 }
-
 void AtribuiDado(Item *item, int quant){
     for(int i=0; i < quant; i++) {
         item[i].peso = rand() % MAX_PESO + 10;
@@ -84,7 +82,6 @@ void AtribuiDado(Item *item, int quant){
 
     PrintItem(item, quant);
 }
-
 int CalculaSol(Item *item, const int quantidades[]){
     int solucao = 0;
     for(int i=0; i < MAX_ITEM; i++){
@@ -93,7 +90,6 @@ int CalculaSol(Item *item, const int quantidades[]){
 
     return solucao;
 }
-
 void AnalisaSol(Item *item, const int quantidades[], int MelhorSol[], int *SolAtual){
     int solucao = CalculaSol(item, quantidades);
 
@@ -104,7 +100,6 @@ void AnalisaSol(Item *item, const int quantidades[], int MelhorSol[], int *SolAt
         *SolAtual = solucao;
     }
 }
-
 int IniciaRamo(Item *item, int quantidades[], int MelhorSol[], int *SolAtual){
     int CapacRestante = CAPACIDADE;
     CapacRestante -= item[0].qntpeso * item[0].peso;
@@ -121,13 +116,11 @@ int IniciaRamo(Item *item, int quantidades[], int MelhorSol[], int *SolAtual){
 
     return CapacRestante;
 }
-
 void ReiniciaPoda(bool Poda[]){
     for(int i=0; i < MAX_ITEM; i++){
         Poda[i] = false;
     }
 }
-
 int Limitante(Item *item, const int quantidades[], const int k){
     double limitante = 0;
     int somatorio = 0;
@@ -145,12 +138,10 @@ int Limitante(Item *item, const int quantidades[], const int k){
     limitante = ceil(limitante);
     return (int)limitante;
 }
-
 bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *SolAtual, const int k){
     int limitante = Limitante(item, quantidades, k);
 
     if(k==0){
-        //Compara com a melhor solução atual
         if(limitante > *SolAtual){
             printf("%d > %d \n", limitante, *SolAtual);
             //Ramifica
@@ -165,7 +156,6 @@ bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *So
             return false;
         }
     }else{
-        //Compara com a solução ótima
         int SolOtima = CalculaSol(item, quantidades);
         if(limitante > *SolAtual){ 
             printf("%d > %d \n", limitante, SolOtima);
@@ -182,7 +172,6 @@ bool AnalisaRamo(Item *item, const int quantidades[], bool Poda[], const int *So
         }
     }
 }
-
 bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[], bool Poda[], int *SolAtual){
     int k = -1;
 
@@ -208,7 +197,6 @@ bool Ramifica(Item *item, int quantidades[], int *CapacRestante, int MelhorSol[]
 
     return true;
 }
-
 int Mochila(Item *item, int quantidades[]){
     int MelhorSol[MAX_ITEM], SolAtual = 0;
     bool Ramificacao = true;
