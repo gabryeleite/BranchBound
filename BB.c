@@ -72,8 +72,6 @@ void AtribuiDado(Item *item, int quant){
     for(int i=0; i < quant; i++) {
         item[i].peso = rand() % MAX_PESO + 10;
         item[i].prioridade = rand() % MAX_PRIORIDADE + 10;
-    }
-    for(int i=0; i < quant; i++){
         item[i].qntpeso = CAPACIDADE / item[i].peso;
         item[i].fator = (double)item[i].prioridade / item[i].peso;
     }
