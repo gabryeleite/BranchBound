@@ -105,8 +105,8 @@ void AnalisaSol(Item *item, const int quantidades[], int MelhorSol[], int *SolAt
 
 int IniciaRamo(Item *item, int quantidades[], int capacidade, int MelhorSol[], int *SolAtual){
     int CapacRestante = capacidade;
-    CapacRestante -= (capacidade/item[0].peso) * item[0].peso;
-    quantidades[0] = capacidade/item[0].peso;
+    quantidades[0] =  CapacRestante /item[0].peso;
+    CapacRestante -= quantidades[0] * item[0].peso;
 
     for(int i=1; i < MAX_ITEM; i++){
         int qntde = CapacRestante / item[i].peso;
